@@ -11,5 +11,5 @@ import torch
 from fr3dnet import vgg_face
 
 model = vgg_face()
-model.load_state_dict(torch.load('/content/drive/MyDrive/Colab Notebooks/Face-Data/fr3dnet.pth'))
+model.load_state_dict(torch.load('fr3dnet.pth'))
 ```
