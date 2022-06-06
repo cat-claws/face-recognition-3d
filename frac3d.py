@@ -1,4 +1,5 @@
-from torch import nn
+import torch
+import torch.nn as nn
 from torchvision import models
 
 class FRAC3D(nn.Module):
