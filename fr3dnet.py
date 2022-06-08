@@ -102,7 +102,7 @@ class vgg_face(nn.Module):
 		out_ = self.fc7(out)
 		out = self.relu7(out_)
 		out = self.fc8(out)
-		return out, x_pool5
+		return out, out_
 
 	def _initialize_weights(self):
 		for m in self.modules():
