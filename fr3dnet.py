@@ -124,7 +124,7 @@ class FR3DNET(nn.Module):
 		super(FR3DNET, self).__init__()
 		vgg = vgg_face()
 		vgg.load_state_dict(torch.load(ckpt_path, map_location=torch.device('cpu')))
-		self.truncated_resnet = nn.Sequential(*list(vgg.children())[:-1])
+		self.truncated_vgg = nn.Sequential(*list(vgg.children())[:-1])
 	def forward(self, x):
-		feats = self.vgg(x)
+		feats = self.truncated_vgg(x)
 		return feats.view(feats.size(0), -1)
