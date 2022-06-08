@@ -78,7 +78,7 @@ class _Led3D(nn.Module):
 		drop            = F.dropout(input = s5_global_conv, p = 0.20000000298023224, training = self.training, inplace = True)
 		fc              = self.fc(drop.view(drop.size(0), -1))
 		softmax         = F.softmax(fc)
-		return softmax
+		return softmax, drop
 
 
 	@staticmethod
@@ -127,7 +127,6 @@ class Led3D(nn.Module):
 		super(Led3D, self).__init__()
 		led = _Led3D()
 		led.load_state_dict(torch.load(ckpt_path, map_location=torch.device('cpu')))
-		self.truncated_led = nn.Sequential(*list(led.children())[:-1])
 	def forward(self, x):
-		feats = self.truncated_led(x)
-		return feats.view(feats.size(0), -1)
+		feats = self.led(x)[1]
+		return feats
