@@ -125,8 +125,8 @@ class _Led3D(nn.Module):
 class Led3D(nn.Module):
 	def __init__(self, ckpt_path = None):
 		super(Led3D, self).__init__()
-		led = _Led3D()
-		led.load_state_dict(torch.load(ckpt_path, map_location=torch.device('cpu')))
+		self.led = _Led3D()
+		self.led.load_state_dict(torch.load(ckpt_path, map_location=torch.device('cpu')))
 	def forward(self, x):
 		feats = self.led(x)[1]
 		return feats
