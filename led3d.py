@@ -127,7 +127,7 @@ class Led3D(nn.Module):
 		super(Led3D, self).__init__()
 		led = _Led3D()
 		led.load_state_dict(torch.load(ckpt_path, map_location=torch.device('cpu')))
-		self.truncated_resnet = nn.Sequential(*list(led.children())[:-1])
+		self.truncated_led = nn.Sequential(*list(led.children())[:-1])
 	def forward(self, x):
-		feats = self.led(x)
+		feats = self.truncated_led(x)
 		return feats.view(feats.size(0), -1)
