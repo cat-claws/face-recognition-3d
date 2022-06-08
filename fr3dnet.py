@@ -117,3 +117,14 @@ class vgg_face(nn.Module):
 			elif isinstance(m, nn.Linear):
 				m.weight.data.normal_(0, 0.01)
 				m.bias.data.zero_()
+
+
+class FR3DNET(nn.Module):
+	def __init__(self, ckpt_path = None):
+		super(FR3DNET, self).__init__()
+		vgg = vgg_face()
+		vgg.load_state_dict(torch.load(ckpt_path, map_location=torch.device('cpu')))
+		self.truncated_resnet = nn.Sequential(*list(vgg.children())[:-1])
+	def forward(self, x):
+		feats = self.vgg(x)
+		return feats.view(feats.size(0), -1)
