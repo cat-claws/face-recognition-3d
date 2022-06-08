@@ -99,10 +99,10 @@ class vgg_face(nn.Module):
 
 		out = self.fc6(out.view(out.size(0),-1))
 		out = self.relu6(out)
-		out = self.fc7(out)
-		out = self.relu7(out)
+		out_ = self.fc7(out)
+		out = self.relu7(out_)
 		out = self.fc8(out)
-		return out
+		return out, out_
 
 	def _initialize_weights(self):
 		for m in self.modules():
@@ -122,9 +122,8 @@ class vgg_face(nn.Module):
 class FR3DNET(nn.Module):
 	def __init__(self, ckpt_path = None):
 		super(FR3DNET, self).__init__()
-		vgg = vgg_face()
-		vgg.load_state_dict(torch.load(ckpt_path, map_location=torch.device('cpu')))
-		self.truncated_vgg = nn.Sequential(*list(vgg.children())[:-1])
+		self.vgg = vgg_face()
+		self.vgg.load_state_dict(torch.load(ckpt_path, map_location=torch.device('cpu')))
 	def forward(self, x):
-		feats = self.truncated_vgg(x)
+		feats = self.vgg(x)[1
 		return feats.view(feats.size(0), -1)
