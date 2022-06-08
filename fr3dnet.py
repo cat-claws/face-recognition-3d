@@ -125,5 +125,5 @@ class FR3DNET(nn.Module):
 		self.vgg = vgg_face()
 		self.vgg.load_state_dict(torch.load(ckpt_path, map_location=torch.device('cpu')))
 	def forward(self, x):
-		feats = self.vgg(x)[1
+		feats = self.vgg(x)[1]
 		return feats.view(feats.size(0), -1)
