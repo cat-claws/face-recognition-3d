@@ -129,4 +129,4 @@ class Led3D(nn.Module):
 		self.led.load_state_dict(torch.load(ckpt_path, map_location=torch.device('cpu')))
 	def forward(self, x):
 		feats = self.led(x)[1]
-		return feats
+		return feats.view(feats.size(0), -1)
